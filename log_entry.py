@@ -5,6 +5,8 @@ from mdutils.mdutils import MdUtils
 from dotenv import load_dotenv
 load_dotenv()
 
+from prompts import get_random_prompt
+
 # Variables
 folder_path = os.getenv("JOURNAL_FOLDER")
 obsidian_path = os.getenv("OBSIDIAN_PATH")
@@ -75,8 +77,11 @@ def log_entry(date: date) -> str:
     ---
 
 
+    ### Prompt: {get_random_prompt()}
+
+
     ### Success of the Day
-    -
+
 
     ### Gratitude / What I liked about the day?
     -
@@ -84,9 +89,10 @@ def log_entry(date: date) -> str:
     -
 
     ### Laskavost
-    -
+
 
     """
+    # Strip white spaces
     template = '\n'.join(line.strip() for line in template.split('\n'))
 
     filename = f"{folder_path}J - {date.strftime('%Y-%m-%d')}.md"
