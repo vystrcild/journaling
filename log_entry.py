@@ -8,6 +8,7 @@ load_dotenv()
 # Variables
 folder_path = os.getenv("JOURNAL_FOLDER")
 obsidian_path = os.getenv("OBSIDIAN_PATH")
+first_entry = "2013-07-15"
 
 def get_last_entry(folder_path:str)->str:
     """
@@ -69,7 +70,7 @@ def log_entry(date: date) -> str:
     ---
     # {today_abbr} - {today}  -
     << [[Journal/J - {yesterday}|Yesterday]] || [[Journal/J - {tomorrow}|Tomorrow]] >>
-    On this day:
+    On this day: {generate_previous_dates(today)}
 
     ---
 
@@ -127,6 +128,30 @@ def create_or_open_last(date: date, folder_path: str, last_entry_date: date):
     else:
         # Try create a new entry
         log_entry(date)
+
+
+def generate_previous_dates(log_entry: date):
+    """
+    Generates dates for the same date as log_entry but for previous years within a given range
+    :param log_entry: The last date in the range
+    :type log_entry: str
+    :return: A list of dates
+    :rtype: list
+    """
+    first_entry_date = datetime.strptime("2013-07-15", "%Y-%m-%d")
+    log_entry_date = datetime.strptime(log_entry, "%Y-%m-%d")
+    previous_years_dates = []
+    for year in range(first_entry_date.year, log_entry_date.year):
+        previous_date = log_entry_date.replace(year=year)
+        if previous_date > first_entry_date and previous_date != log_entry_date:
+            previous_years_dates.append(datetime.strftime(previous_date, "%Y-%m-%d"))
+
+    last_years_string = ""
+    for date in previous_years_dates:
+        last_years_string += (f"[[Journal/J - {date}|{date[:4]}]] | ")
+    last_years_string = last_years_string.rstrip(" | ")
+    return last_years_string
+
 
 
 last_entry = get_last_entry(folder_path)
