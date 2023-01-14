@@ -53,7 +53,7 @@ def generate_date(date_string: str) -> date:
     return date_object
 
 
-def log_entry(date: date) -> str:
+def log_entry(date: date):
     """
     Returns a journal entry template for a given date.
     :param date: A date object for which the template is generated.
@@ -148,7 +148,10 @@ def generate_previous_dates(log_entry: date):
     log_entry_date = datetime.strptime(log_entry, "%Y-%m-%d")
     previous_years_dates = []
     for year in range(first_entry_date.year, log_entry_date.year):
-        previous_date = log_entry_date.replace(year=year)
+        try:
+            previous_date = log_entry_date.replace(year=year)
+        except:
+            continue
         if previous_date > first_entry_date and previous_date != log_entry_date:
             previous_years_dates.append(datetime.strftime(previous_date, "%Y-%m-%d"))
 
@@ -159,8 +162,8 @@ def generate_previous_dates(log_entry: date):
     return last_years_string
 
 
-
-last_entry = get_last_entry(folder_path)
-last_entry_date = generate_date(last_entry)
-next_entry_date = get_next_entry_date(last_entry_date)
-create_or_open_last(next_entry_date, folder_path, last_entry_date)
+def create_entry():
+    last_entry = get_last_entry(folder_path)
+    last_entry_date = generate_date(last_entry)
+    next_entry_date = get_next_entry_date(last_entry_date)
+    create_or_open_last(next_entry_date, folder_path, last_entry_date)
