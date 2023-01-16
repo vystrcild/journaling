@@ -96,6 +96,8 @@ def log_entry(date: date):
 
     ---
 
+    ## Daily log
+
 
     """
     # Strip white spaces
