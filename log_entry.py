@@ -75,20 +75,26 @@ def log_entry(date: date):
     On this day: {generate_previous_dates(today)}
 
     ---
+    ## Entry:
 
 
-    ### Prompt: {get_random_prompt()}
+    ---
+    > [!question] Prompt: {get_random_prompt()}
 
 
-    ### Success of the Day
+    > [!success] Success of the Day
 
 
-    ### Gratitude / What I liked about the day?
+
+    > [!danger] Gratitude / What I liked about the day?
+
     -
     -
     -
 
-    ### Laskavost
+    > [!tip] Laskavost
+
+    ---
 
 
     """
@@ -162,7 +168,7 @@ def generate_previous_dates(log_entry: date):
     return last_years_string
 
 
-def create_entry():
+if __name__ == "__main__":
     last_entry = get_last_entry(folder_path)
     last_entry_date = generate_date(last_entry)
     next_entry_date = get_next_entry_date(last_entry_date)
