@@ -94,6 +94,8 @@ def log_entry(date: date):
 
     > [!tip] Laskavost
 
+
+
     ---
 
     ## Daily log
